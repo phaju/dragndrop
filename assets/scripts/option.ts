@@ -3,7 +3,6 @@ const {ccclass, property} = cc._decorator;
 
 @ccclass
 export default class NewClass extends cc.Component {
-    // -------------------------
 
     @property(cc.Button)
     resetButton: cc.Button = null;
@@ -53,7 +52,6 @@ export default class NewClass extends cc.Component {
     lockRed = false;
     lockGreen = false;
 
-    // Interaction and Validation
     drag(thisNode: cc.Node){
 
         // Click
@@ -65,7 +63,7 @@ export default class NewClass extends cc.Component {
         thisNode.on(cc.Node.EventType.TOUCH_MOVE, (Event)=> {
             if(!this.mouseDown) 
                 return;
-            this.delta = Event.getDelta();
+            this.delta = Event.getPosition();
             thisNode.x += this.delta.x;
             thisNode.y += this.delta.y;
         });
@@ -170,23 +168,15 @@ export default class NewClass extends cc.Component {
         });
     }
 
-    // LIFE-CYCLE CALLBACKS:
-
-    onLoad () {
-        this.resetButton.node.on(cc.Node.EventType.TOUCH_START, function (Event) {
-            cc.director.loadScene("task")
-        });
-        cc.macro.ENABLE_MULTI_TOUCH = false;
-        this.drag(this.black);
-        this.drag(this.blue);
-        this.drag(this.green);
-        this.drag(this.red);
-    }
+    // onLoad () {}
 
     start () {
-
     }
 
     update (dt) {
+        if(!this.mouseDown)
+        {
+            this.drag(this.node);
+        }
     }
 }
